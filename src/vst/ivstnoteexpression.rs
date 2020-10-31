@@ -2,23 +2,23 @@ use crate::base::{tchar, tresult};
 use vst3_com::com_interface;
 use vst3_com::interfaces::iunknown::IUnknown;
 
-pub enum NoteExpressionTypeID
-{
-	kVolumeTypeID = 0,
-	kPanTypeID = 1,
-	kTuningTypeID = 2,
-	kVibratoTypeID = 3,
-	kExpressionTypeID = 4,
-	kBrightnessTypeID = 5,
-	kTextTypeID = 6,
-	kPhonemeTypeID = 7,
-	kCustomStart = 100000,
-	kCustomEnd = 200000,
-	kInvalidTypeID = 0xFFFFFFFF
+#[derive(Copy, Clone, Debug)]
+pub enum NoteExpressionTypeIDs {
+    kVolumeTypeID = 0,
+    kPanTypeID = 1,
+    kTuningTypeID = 2,
+    kVibratoTypeID = 3,
+    kExpressionTypeID = 4,
+    kBrightnessTypeID = 5,
+    kTextTypeID = 6,
+    kPhonemeTypeID = 7,
+    kCustomStart = 100000,
+    kCustomEnd = 200000,
+    kInvalidTypeID = 0xFFFFFFFF,
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, Default)]
+#[derive(Copy, Clone, Debug)]
 pub struct NoteExpressionValueDescription {
     pub default_value: f64,
     pub min: f64,
@@ -29,7 +29,7 @@ pub struct NoteExpressionValueDescription {
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default)]
 pub struct NoteExpressionValueEvent {
-    pub type_id: NoteExpressionTypeID,
+    pub type_id: u32,
     pub note_id: i32,
     pub value: f64,
 }
@@ -37,7 +37,7 @@ pub struct NoteExpressionValueEvent {
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct NoteExpressionTextEvent {
-    pub type_id: NoteExpressionTypeID,
+    pub type_id: u32,
     pub note_id: i32,
     pub text_len: u32,
     pub text: *const tchar,
@@ -46,7 +46,7 @@ pub struct NoteExpressionTextEvent {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct NoteExpressionTypeInfo {
-    pub type_id: NoteExpressionTypeID,
+    pub type_id: u32,
     pub title: [tchar; 128],
     pub short_title: [tchar; 128],
     pub units: [tchar; 128],
@@ -56,12 +56,12 @@ pub struct NoteExpressionTypeInfo {
     pub flags: i32,
 }
 
-pub enum KeySwitchTypeID
-{
-	kNoteOnKeyswitchTypeID = 0,
-	kOnTheFlyKeyswitchTypeID = 1,	
-	kOnReleaseKeyswitchTypeID = 2,
-	kKeyRangeTypeID = 3
+#[derive(Copy, Clone, Debug)]
+pub enum KeySwitchTypeID {
+    kNoteOnKeyswitchTypeID = 0,
+    kOnTheFlyKeyswitchTypeID = 1,
+    kOnReleaseKeyswitchTypeID = 2,
+    kKeyRangeTypeID = 3,
 }
 
 #[repr(C)]
